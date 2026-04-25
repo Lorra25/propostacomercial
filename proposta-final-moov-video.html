@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta | Moov Video</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@200;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #13cacd;
+            --accent-glow: rgba(19, 202, 205, 0.5);
+            --bg-main: #0c1b2a;
+            --bg-card: #0e1d2c;
+        }
+
+        * { scroll-behavior: smooth; }
+
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes border-spin {
+            from { --gradient-angle: 0deg; }
+            to { --gradient-angle: 360deg; }
+        }
+
+        @keyframes animStar {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-2000px); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(19, 202, 205, 0.5), 0 0 40px rgba(19, 202, 205, 0.25); }
+            50% { box-shadow: 0 0 35px rgba(19, 202, 205, 0.85), 0 0 70px rgba(19, 202, 205, 0.45); }
+        }
+        .btn-pulse {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @property --gradient-angle {
+            syntax: "<angle>";
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        .animate-fade-up {
+            animation: fade-in-up 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .font-manrope { font-family: 'Manrope', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+
+        /* Shiny CTA Button */
+        .shiny-cta {
+            --gradient-angle: 0deg;
+            position: relative;
+            overflow: hidden;
+            border-radius: 9999px;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(var(--bg-main), var(--bg-main)) padding-box,
+            conic-gradient(from var(--gradient-angle), transparent 0%, #13cacd 5%, #13cacd 15%, #13cacd 30%, transparent 40%, transparent 100%) border-box;
+            border: 2px solid transparent;
+            cursor: pointer;
+            isolation: isolate;
+            animation: border-spin 2.5s linear infinite;
+        }
+
+        .shiny-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, white 0.5px, transparent 0);
+            background-size: 4px 4px;
+            opacity: 0.07;
+            z-index: 0;
+        }
+
+        /* Stars */
+        .stars-1 { box-shadow: 234px 124px rgba(255,255,255,0.6), 654px 345px rgba(255,255,255,0.5), 876px 12px rgba(255,255,255,0.7), 1200px 800px rgba(255,255,255,0.4), 400px 1500px rgba(255,255,255,0.6), 1800px 200px rgba(255,255,255,0.5), 100px 1000px rgba(255,255,255,0.4), 900px 1900px rgba(255,255,255,0.6), 500px 600px rgba(255,255,255,0.5), 1400px 100px rgba(255,255,255,0.7), 300px 400px rgba(255,255,255,0.4), 1600px 1200px rgba(255,255,255,0.5), 50px 300px rgba(255,255,255,0.6), 750px 1100px rgba(255,255,255,0.4), 1100px 1600px rgba(255,255,255,0.5), 1700px 700px rgba(255,255,255,0.4), 200px 1800px rgba(255,255,255,0.6), 950px 50px rgba(255,255,255,0.5); }
+        .stars-2 { box-shadow: 123px 456px rgba(255,255,255,0.4), 789px 234px rgba(255,255,255,0.5), 456px 890px rgba(255,255,255,0.3), 1100px 300px rgba(255,255,255,0.4), 200px 1200px rgba(255,255,255,0.5), 1500px 500px rgba(255,255,255,0.3), 600px 1700px rgba(255,255,255,0.4), 1300px 900px rgba(255,255,255,0.5), 350px 750px rgba(255,255,255,0.3), 850px 1400px rgba(255,255,255,0.4), 1650px 1050px rgba(255,255,255,0.3); }
+        .stars-3 { box-shadow: 50px 50px rgba(19,202,205,0.4), 800px 400px rgba(19,202,205,0.3), 1400px 1000px rgba(19,202,205,0.35), 300px 1300px rgba(19,202,205,0.25), 1000px 200px rgba(19,202,205,0.3); }
+
+        .gradient-blur {
+            position: fixed;
+            z-index: 40;
+            inset: 0 0 auto 0;
+            height: 120px;
+            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(12,27,42,0.9), transparent);
+            backdrop-filter: blur(8px);
+            mask-image: linear-gradient(to bottom, black, transparent);
+        }
+
+        .selection-teal::selection {
+            background: #13cacd;
+            color: #0c1b2a;
+        }
+
+        .text-stroke {
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+            color: transparent;
+        }
+
+        /* Card Box — base style */
+        .card-box {
+            background: #0e1d2c;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 20px rgba(19, 202, 205, 0.08), inset 0 1px 0 rgba(255,255,255,0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 0.75rem;
+        }
+        .card-box:hover {
+            box-shadow: 0 0 35px rgba(19, 202, 205, 0.22), 0 0 70px rgba(19, 202, 205, 0.08), inset 0 1px 0 rgba(255,255,255,0.08);
+            border-color: rgba(19, 202, 205, 0.35);
+        }
+
+        /* Pilar Card */
+        .pilar-card {
+            background: #0e1d2c;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 20px rgba(19, 202, 205, 0.08), inset 0 1px 0 rgba(255,255,255,0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .pilar-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 40px rgba(19, 202, 205, 0.25), 0 0 80px rgba(19, 202, 205, 0.1), inset 0 1px 0 rgba(255,255,255,0.08);
+            border-color: rgba(19, 202, 205, 0.4);
+        }
+
+        /* Price slash */
+        .price-slash {
+            position: relative;
+        }
+        .price-slash::after {
+            content: '';
+            position: absolute;
+            left: -5%;
+            top: 50%;
+            width: 110%;
+            height: 3px;
+            background: #13cacd;
+            transform: rotate(-8deg);
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Glowing number */
+        .glow-number {
+            text-shadow: 0 0 30px rgba(19, 202, 205, 0.6), 0 0 60px rgba(19, 202, 205, 0.3);
+        }
+
+        /* Section divider */
+        .section-divider {
+            background: linear-gradient(90deg, transparent, rgba(19, 202, 205, 0.3), transparent);
+            height: 1px;
+        }
+
+        /* Featured card border glow */
+        .card-featured {
+            background: #0e1d2c;
+            border: 1px solid rgba(19, 202, 205, 0.4);
+            box-shadow: 0 0 30px rgba(19, 202, 205, 0.15), 0 0 60px rgba(19, 202, 205, 0.06), inset 0 1px 0 rgba(19,202,205,0.1);
+        }
+    </style>
+</head>
+<body class="selection-teal">
+    <div class="min-h-screen text-white font-inter relative overflow-x-hidden" style="background: #0c1b2a;">
+
+        <!-- Global Background -->
+        <div class="fixed inset-0 z-0 pointer-events-none">
+            <div class="absolute inset-0" style="background: linear-gradient(to bottom, #0c1b2a, #060f18);"></div>
+            <div class="absolute top-0 left-0 w-[1px] h-[1px] bg-transparent stars-1 animate-[animStar_50s_linear_infinite]"></div>
+            <div class="absolute top-0 left-0 w-[2px] h-[2px] bg-transparent stars-2 animate-[animStar_80s_linear_infinite]"></div>
+            <div class="absolute top-0 left-0 w-[3px] h-[3px] bg-transparent stars-3 animate-[animStar_120s_linear_infinite]"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[120px]" style="background: rgba(19,202,205,0.04);"></div>
+            <div class="absolute top-[20%] left-[10%] w-[400px] h-[400px] rounded-full blur-[100px]" style="background: rgba(19,202,205,0.03);"></div>
+            <div class="absolute bottom-[10%] right-[10%] w-[600px] h-[600px] rounded-full blur-[150px]" style="background: rgba(19,202,205,0.02);"></div>
+            <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(circle_at_center,black_40%,transparent_80%)]"></div>
+        </div>
+
+        <main class="relative z-10">
+
+            <!-- ============================================ -->
+            <!-- HERO SECTION -->
+            <!-- ============================================ -->
+            <section class="pt-12 md:pt-16 pb-12 md:pb-16 px-6 md:px-10">
+                <div class="max-w-5xl mx-auto">
+                    <div class="flex flex-col lg:flex-row gap-10 lg:gap-12">
+
+                        <!-- LEFT COLUMN -->
+                        <div class="flex flex-col lg:w-[42%]">
+
+                            <!-- Logo -->
+                            <div class="mb-7 animate-fade-up" style="animation-delay: 0.05s;">
+                                <img src="Logo-claro.png" alt="Moov Video" style="height: 52px; width: auto; object-fit: contain; object-position: left;">
+                            </div>
+
+                            <!-- Headline -->
+                            <h1 class="font-manrope font-black leading-[0.9] tracking-tight mb-5 animate-fade-up" style="font-size: clamp(3rem, 5.5vw, 5rem); animation-delay: 0.1s;">
+                                <span class="block text-white">Proposta</span>
+                                <span class="block text-white">Comercial</span>
+                            </h1>
+
+                            <!-- Client labels row -->
+                            <div class="flex flex-wrap items-center gap-x-3 gap-y-2 mb-3 animate-fade-up" style="animation-delay: 0.16s;">
+                                <span class="text-sm text-zinc-500 font-manrope">Cliente</span>
+                                <span class="text-sm font-semibold font-manrope" style="color:#13cacd;">Nome do cliente</span>
+                                <span class="text-zinc-700 text-sm">|</span>
+                                <span class="text-sm text-zinc-500 font-manrope">Empresa</span>
+                                <span class="text-sm text-zinc-500 font-manrope">—</span>
+                            </div>
+
+                            <!-- Divider -->
+                            <div class="mb-4 animate-fade-up" style="height:1px; background: linear-gradient(90deg, rgba(19,202,205,0.5), transparent); animation-delay: 0.19s;"></div>
+
+                            <!-- Description -->
+                            <p class="text-zinc-400 text-sm leading-relaxed mb-8 animate-fade-up" style="animation-delay: 0.22s;">
+                                Somos um estúdio de visualização 3D e inteligência artificial para criação de imagens e vídeos que potencializam a venda de empreendimentos.
+                            </p>
+
+                        </div>
+
+                        <!-- RIGHT COLUMN -->
+                        <div class="flex flex-col flex-1 gap-5">
+
+                            <!-- Video -->
+                            <video src="Reserva.mp4" autoplay muted loop playsinline class="rounded-xl w-full animate-fade-up" style="animation-delay: 0.18s; object-fit: cover;"></video>
+
+                            <!-- Info strip -->
+                            <div class="flex items-center justify-between animate-fade-up" style="animation-delay: 0.26s;">
+                                <p class="text-sm font-bold font-manrope text-white">Informações da proposta</p>
+                                <div class="flex gap-8">
+                                    <div>
+                                        <p class="text-xs text-zinc-500 uppercase tracking-widest mb-0.5">Validade</p>
+                                        <p class="text-sm font-semibold font-manrope" style="color:#13cacd;">10 a 20 dias</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-zinc-500 uppercase tracking-widest mb-0.5">Serviço</p>
+                                        <p class="text-sm font-semibold font-manrope" style="color:#13cacd;">3D + IA</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Metrics Strip -->
+            <div class="w-full border-t border-b py-7 opacity-80 hover:opacity-100 transition-opacity" style="border-color: rgba(255,255,255,0.07); background: rgba(14,29,44,0.4);">
+                <div class="max-w-5xl mx-auto px-6 md:px-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div>
+                        <div class="text-3xl font-bold font-manrope" style="color:#13cacd;">+<span class="counter" data-target="50">0</span></div>
+                        <div class="text-xs text-white uppercase tracking-widest mt-1">Projetos Realizados</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold font-manrope" style="color:#13cacd;">+<span class="counter" data-target="2000" data-format="thousands">0</span></div>
+                        <div class="text-xs text-white uppercase tracking-widest mt-1">Imagens Criadas</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold font-manrope" style="color:#13cacd;">+<span class="counter" data-target="80">0</span></div>
+                        <div class="text-xs text-white uppercase tracking-widest mt-1">Vídeos Produzidos</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold font-manrope">
+                            <span style="color:#13cacd;">★★★★</span><span style="background: linear-gradient(90deg, #13cacd 50%, white 50%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">★</span>
+                        </div>
+                        <div class="text-xs text-white uppercase tracking-widest mt-1">Clientes em todo Brasil</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SECTION 1: SOBRE -->
+            <!-- ============================================ -->
+            <section id="sobre" class="py-10 md:py-14 px-6">
+                <div class="max-w-6xl mx-auto">
+
+                    <div class="mb-10 md:mb-14 text-center max-w-3xl mx-auto reveal">
+                        <p class="text-sm font-bold uppercase tracking-widest mb-6" style="color:#13cacd;">NOME DO CLIENTE</p>
+                        <h2 class="text-4xl md:text-5xl font-semibold text-white tracking-tight font-manrope mb-6">
+                            <span class="block">Mais do que imagens.</span>
+                            <span class="block" style="color:#13cacd;">Experiências que vendem.</span>
+                        </h2>
+                        <p class="text-lg text-zinc-400 font-light leading-relaxed">
+                            A Moov Video não cria apenas imagens ou vídeos.
+                            Nós transformamos projetos em experiências visuais realistas que fazem o cliente
+                            <span class="text-white font-medium">enxergar, desejar e comprar</span>.
+                        </p>
+                    </div>
+
+                    <!-- Value Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
+
+                        <div class="card-box group relative overflow-hidden p-8">
+                            <div class="absolute top-0 right-0 w-32 h-32 rounded-full blur-[60px]" style="background: rgba(19,202,205,0.06);"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-lg border shrink-0" style="background: rgba(19,202,205,0.08); border-color: rgba(19,202,205,0.2); color:#13cacd;">
+                                        <iconify-icon icon="lucide:eye" style="font-size:18px;"></iconify-icon>
+                                    </div>
+                                    <h3 class="text-xl font-semibold text-white font-manrope">Enxergar</h3>
+                                </div>
+                                <p class="text-zinc-400 text-sm leading-relaxed">Visualizações 3D realistas que permitem ao cliente ver o empreendimento antes mesmo de existir.</p>
+                            </div>
+                        </div>
+
+                        <div class="card-box group relative overflow-hidden p-8">
+                            <div class="absolute top-0 right-0 w-32 h-32 rounded-full blur-[60px]" style="background: rgba(19,202,205,0.06);"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-lg border shrink-0" style="background: rgba(19,202,205,0.08); border-color: rgba(19,202,205,0.2); color:#13cacd;">
+                                        <iconify-icon icon="lucide:heart" style="font-size:18px;"></iconify-icon>
+                                    </div>
+                                    <h3 class="text-xl font-semibold text-white font-manrope">Desejar</h3>
+                                </div>
+                                <p class="text-zinc-400 text-sm leading-relaxed">Ambientação completa com pessoas, paisagismo e contexto real que desperta o desejo de compra.</p>
+                            </div>
+                        </div>
+
+                        <div class="card-box group relative overflow-hidden p-8">
+                            <div class="absolute top-0 right-0 w-32 h-32 rounded-full blur-[60px]" style="background: rgba(19,202,205,0.06);"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-lg border shrink-0" style="background: rgba(19,202,205,0.08); border-color: rgba(19,202,205,0.2); color:#13cacd;">
+                                        <iconify-icon icon="lucide:shopping-bag" style="font-size:18px;"></iconify-icon>
+                                    </div>
+                                    <h3 class="text-xl font-semibold text-white font-manrope">Comprar</h3>
+                                </div>
+                                <p class="text-zinc-400 text-sm leading-relaxed">Narrativa visual cinematográfica que conduz o cliente da curiosidade até a decisão de compra.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section Divider -->
+            <div class="section-divider max-w-4xl mx-auto"></div>
+
+            <!-- ============================================ -->
+            <!-- SECTION 2: POR QUE ESCOLHER -->
+            <!-- ============================================ -->
+            <section id="beneficios" class="py-10 md:py-14 px-6">
+                <div class="max-w-6xl mx-auto">
+
+                    <div class="mb-10 md:mb-14 text-center max-w-3xl mx-auto reveal">
+                        <h2 class="text-4xl md:text-5xl font-semibold text-white tracking-tight font-manrope mb-6">
+                            Por que escolher a <span style="color:#13cacd;">Moov Vídeo</span>?
+                        </h2>
+                        <p class="text-lg text-zinc-400 font-light leading-relaxed">
+                            Transforme a forma como você apresenta seus loteamentos e empreendimentos e conquiste mais clientes.
+                        </p>
+                    </div>
+
+                    <!-- Benefits List -->
+                    <div class="flex flex-col gap-3 max-w-2xl mx-auto">
+
+                        <div class="card-box flex items-center gap-4 px-5 py-4 rounded-xl reveal group hover:border-[rgba(19,202,205,0.4)] transition-colors">
+                            <iconify-icon icon="lucide:check-circle-2" style="color:#13cacd; font-size:22px; flex-shrink:0;"></iconify-icon>
+                            <span class="text-white font-medium font-manrope">Aumente suas vendas com visualizações impactantes</span>
+                        </div>
+
+                        <div class="card-box flex items-center gap-4 px-5 py-4 rounded-xl reveal group hover:border-[rgba(19,202,205,0.4)] transition-colors">
+                            <iconify-icon icon="lucide:check-circle-2" style="color:#13cacd; font-size:22px; flex-shrink:0;"></iconify-icon>
+                            <span class="text-white font-medium font-manrope">Reduza o tempo de decisão dos clientes</span>
+                        </div>
+
+                        <div class="card-box flex items-center gap-4 px-5 py-4 rounded-xl reveal group hover:border-[rgba(19,202,205,0.4)] transition-colors">
+                            <iconify-icon icon="lucide:check-circle-2" style="color:#13cacd; font-size:22px; flex-shrink:0;"></iconify-icon>
+                            <span class="text-white font-medium font-manrope">Destaque-se da concorrência</span>
+                        </div>
+
+                        <div class="card-box flex items-center gap-4 px-5 py-4 rounded-xl reveal group hover:border-[rgba(19,202,205,0.4)] transition-colors">
+                            <iconify-icon icon="lucide:check-circle-2" style="color:#13cacd; font-size:22px; flex-shrink:0;"></iconify-icon>
+                            <span class="text-white font-medium font-manrope">Apresente projetos antes da construção</span>
+                        </div>
+
+                        <div class="card-box flex items-center gap-4 px-5 py-4 rounded-xl reveal group hover:border-[rgba(19,202,205,0.4)] transition-colors">
+                            <iconify-icon icon="lucide:check-circle-2" style="color:#13cacd; font-size:22px; flex-shrink:0;"></iconify-icon>
+                            <span class="text-white font-medium font-manrope">Flexibilidade para ajustes e modificações</span>
+                        </div>
+
+                        <div class="card-box flex items-center gap-4 px-5 py-4 rounded-xl reveal group hover:border-[rgba(19,202,205,0.4)] transition-colors">
+                            <iconify-icon icon="lucide:check-circle-2" style="color:#13cacd; font-size:22px; flex-shrink:0;"></iconify-icon>
+                            <span class="text-white font-medium font-manrope">Entrega rápida sem comprometer a qualidade</span>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section Divider -->
+            <div class="section-divider max-w-4xl mx-auto"></div>
+
+            <!-- ============================================ -->
+            <!-- SECTION 3: NOSSO PROCESSO -->
+            <!-- ============================================ -->
+            <section id="processo" class="py-10 md:py-14 px-6">
+                <div class="max-w-5xl mx-auto">
+
+                    <div class="mb-10 md:mb-14 text-center max-w-3xl mx-auto reveal">
+                        <h2 class="text-4xl md:text-5xl font-semibold text-white tracking-tight font-manrope mb-6">
+                            Nosso <span style="color:#13cacd;">Processo</span>
+                        </h2>
+                        <p class="text-lg text-zinc-400 font-light">
+                            Trabalhamos com um fluxo claro para garantir qualidade e consistência em cada projeto.
+                        </p>
+                    </div>
+
+                    <!-- Process Grid: 3 columns x 2 rows -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                        <!-- Etapa 01 -->
+                        <div class="reveal group">
+                            <div class="card-box relative overflow-hidden p-6 md:p-8 h-full" style="border-radius:0.75rem;">
+                                <div class="absolute top-0 left-0 w-full h-1 rounded-t-xl" style="background: linear-gradient(to right, #13cacd, transparent);"></div>
+                                <div class="relative z-10">
+                                    <div class="flex items-center gap-3 mb-5">
+                                        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold font-manrope text-sm" style="background: rgba(19,202,205,0.1); border: 1px solid rgba(19,202,205,0.3); color:#13cacd;">01</div>
+                                        <div class="text-white font-semibold font-manrope">Alinhamento do projeto</div>
+                                    </div>
+                                    <p class="text-sm text-zinc-400 leading-relaxed">Entendimento do empreendimento, proposta e público. Definimos juntos o que precisa ser comunicado e para quem.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Etapa 02 -->
+                        <div class="reveal group" style="transition-delay: 0.05s;">
+                            <div class="card-box relative overflow-hidden p-6 md:p-8 h-full" style="border-radius:0.75rem;">
+                                <div class="absolute top-0 left-0 w-full h-1 rounded-t-xl" style="background: linear-gradient(to right, #13cacd, transparent);"></div>
+                                <div class="relative z-10">
+                                    <div class="flex items-center gap-3 mb-5">
+                                        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold font-manrope text-sm" style="background: rgba(19,202,205,0.1); border: 1px solid rgba(19,202,205,0.3); color:#13cacd;">02</div>
+                                        <div class="text-white font-semibold font-manrope">Orçamento</div>
+                                    </div>
+                                    <p class="text-sm text-zinc-400 leading-relaxed">Definição do escopo, valores e prazo com base na análise do projeto. Sem surpresas — tudo documentado antes de começar.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Etapa 03 -->
+                        <div class="reveal group" style="transition-delay: 0.1s;">
+                            <div class="card-box relative overflow-hidden p-6 md:p-8 h-full" style="border-radius:0.75rem;">
+                                <div class="absolute top-0 left-0 w-full h-1 rounded-t-xl" style="background: linear-gradient(to right, #13cacd, transparent);"></div>
+                                <div class="relative z-10">
+                                    <div class="flex items-center gap-3 mb-5">
+                                        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold font-manrope text-sm" style="background: rgba(19,202,205,0.1); border: 1px solid rgba(19,202,205,0.3); color:#13cacd;">03</div>
+                                        <div class="text-white font-semibold font-manrope">Recebimento de material</div>
+                                    </div>
+                                    <p class="text-sm text-zinc-400 leading-relaxed">Planta, DWG, PDF ou referências visuais. Quanto mais informação, mais fiel ao projeto real será o resultado final.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Etapa 04 -->
+                        <div class="reveal group" style="transition-delay: 0.15s;">
+                            <div class="card-box relative overflow-hidden p-6 md:p-8 h-full" style="border-radius:0.75rem;">
+                                <div class="absolute top-0 left-0 w-full h-1 rounded-t-xl" style="background: linear-gradient(to right, #13cacd, transparent);"></div>
+                                <div class="relative z-10">
+                                    <div class="flex items-center gap-3 mb-5">
+                                        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold font-manrope text-sm" style="background: rgba(19,202,205,0.1); border: 1px solid rgba(19,202,205,0.3); color:#13cacd;">04</div>
+                                        <div class="text-white font-semibold font-manrope">Assinatura de contrato</div>
+                                    </div>
+                                    <p class="text-sm text-zinc-400 leading-relaxed">Formalização do projeto para início da produção, com alinhamento de prazos, entregas e condições. Segurança para ambos os lados.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Etapa 05 -->
+                        <div class="reveal group" style="transition-delay: 0.2s;">
+                            <div class="card-box relative overflow-hidden p-6 md:p-8 h-full" style="border-radius:0.75rem;">
+                                <div class="absolute top-0 left-0 w-full h-1 rounded-t-xl" style="background: linear-gradient(to right, #13cacd, transparent);"></div>
+                                <div class="relative z-10">
+                                    <div class="flex items-center gap-3 mb-5">
+                                        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold font-manrope text-sm" style="background: rgba(19,202,205,0.1); border: 1px solid rgba(19,202,205,0.3); color:#13cacd;">05</div>
+                                        <div class="text-white font-semibold font-manrope">Construção visual com Inteligência Artificial e 3D</div>
+                                    </div>
+                                    <p class="text-sm text-zinc-400 leading-relaxed">Criação de imagens realistas com ambientação completa — pessoas, paisagismo, iluminação e contexto real do entorno.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Etapa 06 -->
+                        <div class="reveal group" style="transition-delay: 0.25s;">
+                            <div class="card-box relative overflow-hidden p-6 md:p-8 h-full" style="border-radius:0.75rem;">
+                                <div class="absolute top-0 left-0 w-full h-1 rounded-t-xl" style="background: linear-gradient(to right, #13cacd, transparent);"></div>
+                                <div class="relative z-10">
+                                    <div class="flex items-center gap-3 mb-5">
+                                        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold font-manrope text-sm" style="background: rgba(19,202,205,0.1); border: 1px solid rgba(19,202,205,0.3); color:#13cacd;">06</div>
+                                        <div class="text-white font-semibold font-manrope">Produção do vídeo</div>
+                                    </div>
+                                    <p class="text-sm text-zinc-400 leading-relaxed">Movimentos de câmera, narrativa visual e finalização. Trilha, ritmo e entrega do material pronto para usar em campanhas.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="mt-12 reveal">
+                        <div class="flex items-center justify-between text-xs text-zinc-500 uppercase tracking-widest mb-3">
+                            <span>Etapa 01 — Alinhamento</span>
+                            <span>Etapa 06 — Entrega Final</span>
+                        </div>
+                        <div class="h-2 rounded-full overflow-hidden border border-white/5" style="background:#0e1d2c;">
+                            <div class="h-full rounded-full" style="width: 100%; background: linear-gradient(to right, #13cacd, #0a9a9d, #13cacd);"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Section Divider -->
+            <div class="section-divider max-w-4xl mx-auto"></div>
+
+            <!-- ============================================ -->
+            <!-- SECTION 4: ORÇAMENTO -->
+            <!-- ============================================ -->
+            <section id="orcamento" class="py-10 md:py-14 px-6 relative">
+                <div class="max-w-6xl mx-auto">
+
+                    <div class="text-center mb-10 md:mb-14 reveal">
+                        <h2 class="text-4xl md:text-5xl font-semibold text-white font-manrope mb-4 tracking-tight">Orçamento e <span style="color:#13cacd;">Entrega</span></h2>
+                        <p class="text-zinc-400 text-lg">Transparência total. Escopo definido. Prazo garantido.</p>
+                    </div>
+
+                    <!-- Pricing cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+
+                        <!-- Main Pricing Card -->
+                        <div class="relative p-8 md:p-10 rounded-2xl flex flex-col reveal card-featured">
+                            <div class="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] font-bold uppercase tracking-widest px-4 py-1 rounded-full whitespace-nowrap" style="background:#13cacd; color:#0c1b2a;">
+                                Produção Visual com IA + 3D
+                            </div>
+                            <div class="mt-4 mb-2">
+                                <span class="text-xs font-bold uppercase tracking-widest" style="color:#13cacd;">Investimento</span>
+                            </div>
+                            <h3 class="text-xl font-bold font-manrope mb-2 text-white">Pacote Completo</h3>
+                            <p class="text-zinc-500 text-sm mb-8">Conforme a complexidade do projeto. Escopo definido após análise.</p>
+
+                            <div class="mb-8">
+                                <div class="flex items-baseline gap-2 mb-1">
+                                    <span class="text-5xl md:text-6xl font-bold text-white font-manrope">R$ 3.500</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-zinc-400 text-sm mt-1">
+                                    <iconify-icon icon="lucide:arrow-right" class="w-4 h-4" style="color:#13cacd;"></iconify-icon>
+                                    até <span class="text-white font-semibold">R$ 6.000</span> conforme complexidade
+                                </div>
+                                <div class="mt-4 flex flex-wrap gap-3">
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-zinc-300 text-xs font-medium">
+                                        <iconify-icon icon="lucide:clock" class="w-3 h-3" style="color:#13cacd;"></iconify-icon>
+                                        10 a 20 dias
+                                    </span>
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-zinc-300 text-xs font-medium">
+                                        <iconify-icon icon="lucide:package" class="w-3 h-3" style="color:#13cacd;"></iconify-icon>
+                                        Imagens + Vídeo
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="mt-auto">
+                                <a href="https://wa.me/5511967430768" target="_blank" rel="noopener" class="btn-pulse w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold transition-all text-sm" style="background:#13cacd; color:#0c1b2a;">
+                                    <iconify-icon icon="lucide:message-circle" style="font-size:16px;"></iconify-icon>
+                                    Aprovar Orçamento
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- What's Included -->
+                        <div class="card-box p-8 md:p-10 rounded-2xl flex flex-col reveal" style="transition-delay: 0.1s;">
+                            <div class="mb-6">
+                                <span class="text-xs font-bold text-zinc-500 uppercase tracking-widest">O que está incluso</span>
+                            </div>
+                            <h3 class="text-xl font-bold font-manrope mb-6 text-white">Tudo que você precisa</h3>
+
+                            <ul class="space-y-4 flex-1">
+                                <li class="flex items-start gap-3 text-sm text-zinc-300">
+                                    <iconify-icon icon="lucide:check" class="mt-0.5 shrink-0 w-4 h-4" style="color:#13cacd;"></iconify-icon>
+                                    <div>
+                                        <span class="text-white font-semibold">Modelagem 3D</span>
+                                        <p class="text-zinc-500 text-xs mt-0.5">Construção do projeto com base na planta e estrutura real.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3 text-sm text-zinc-300">
+                                    <iconify-icon icon="lucide:check" class="mt-0.5 shrink-0 w-4 h-4" style="color:#13cacd;"></iconify-icon>
+                                    <div>
+                                        <span class="text-white font-semibold">Imagens com IA</span>
+                                        <p class="text-zinc-500 text-xs mt-0.5">Cenas realistas com ambientação completa.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3 text-sm text-zinc-300">
+                                    <iconify-icon icon="lucide:check" class="mt-0.5 shrink-0 w-4 h-4" style="color:#13cacd;"></iconify-icon>
+                                    <div>
+                                        <span class="text-white font-semibold">Vídeo cinematográfico</span>
+                                        <p class="text-zinc-500 text-xs mt-0.5">Movimentos de câmera, narrativa visual e impacto.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3 text-sm text-zinc-300">
+                                    <iconify-icon icon="lucide:check" class="mt-0.5 shrink-0 w-4 h-4" style="color:#13cacd;"></iconify-icon>
+                                    <div>
+                                        <span class="text-white font-semibold">Ambientação completa</span>
+                                        <p class="text-zinc-500 text-xs mt-0.5">Inserção de pessoas, paisagismo e contexto real.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3 text-sm text-zinc-300">
+                                    <iconify-icon icon="lucide:check" class="mt-0.5 shrink-0 w-4 h-4" style="color:#13cacd;"></iconify-icon>
+                                    <div>
+                                        <span class="text-white font-semibold">Edição profissional</span>
+                                        <p class="text-zinc-500 text-xs mt-0.5">Ritmo, trilha e finalização do material.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3 text-sm text-zinc-300">
+                                    <iconify-icon icon="lucide:check" class="mt-0.5 shrink-0 w-4 h-4" style="color:#13cacd;"></iconify-icon>
+                                    <div>
+                                        <span class="text-white font-semibold">Refinamento visual</span>
+                                        <p class="text-zinc-500 text-xs mt-0.5">Ajustes finos para elevar a qualidade e percepção.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+        </main>
+
+
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SCROLL REVEAL SCRIPT -->
+    <!-- ============================================ -->
+    <script>
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        document.querySelectorAll('.animate-fade-up').forEach((el, i) => {
+            if (!el.style.animationDelay) {
+                el.style.animationDelay = `${i * 0.1}s`;
+            }
+        });
+
+        // Counter animation
+        const counters = document.querySelectorAll('.counter');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.dataset.counted) {
+                    entry.target.dataset.counted = true;
+                    const target = parseInt(entry.target.dataset.target);
+                    const isThousands = entry.target.dataset.format === 'thousands';
+                    const duration = 1400;
+                    const steps = 50;
+                    const stepTime = duration / steps;
+                    let current = 0;
+                    const increment = target / steps;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(timer);
+                        }
+                        const val = Math.floor(current);
+                        entry.target.textContent = isThousands
+                            ? val.toLocaleString('pt-BR')
+                            : val;
+                    }, stepTime);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(el => counterObserver.observe(el));
+    </script>
+
+</body>
+</html>
